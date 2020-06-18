@@ -1,0 +1,70 @@
+#register-body{
+  background-color: #f8f8e5;
+  margin: 0 auto;
+  width:80%;
+  position: relative;
+  /* position: absolute;
+  transform: translate(-50%,-50%);
+  top: 50%;
+  left: 50%;
+  border: 1px ridge black; */
+}
+
+#register-title{
+  height: 4em;
+  line-height: 4em;
+  padding-left: 5%;
+}
+
+#register-form p{
+  padding: 1% 1% 1% 10%;
+  height: 25%;
+  line-height: 25%;
+}
+
+#registerBtn{
+  border: none;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  position: relative;
+  left: 40%;
+}
+
+#register-form p label{
+  margin-right: 5%;
+  display: inline-block;
+  text-align: right;
+  width: 150px;
+  vertical-align: center;
+}
+
+#register-form p span{
+  margin-left: 5%;
+  font-size: small;
+  color: gray;
+}
+
+#register-form 
+  #email,
+  #name,
+  #password,
+  #repassword,
+  #phone{
+  width: 30%;
+  height: 20px;
+}
+
+#register-form 
+  #phone,
+  #introduction{
+  width: 60%;
+}
+
+#register-form #female{
+  margin-left: 4%;
+}
+
+#register-form #introduction{
+  vertical-align: text-top;
+  height: 25%;
+}

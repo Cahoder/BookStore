@@ -1,0 +1,119 @@
+@charset "UTF-8";
+
+* {
+	padding: 0;
+	margin: 0;
+}
+a:link {
+	text-decoration: none;
+}
+.secondary_link {
+	color: grey;
+}
+#pageLimit{
+	display:inline-block;
+	white-space: nowrap;
+}
+#pageLimit li{
+	margin:3px;
+	float:left;
+	display:block;
+}
+
+/* 网上书城顶部 CSS start */
+#header {
+	width: 80%;
+	margin: 0 auto;
+}
+
+#header>ul {
+	width: 100%;
+	text-align: right;
+	height: 35px;
+	line-height: 35px;
+}
+
+#header>ul>li {
+	display: inline;
+}
+
+#header>ul>li>a {
+	text-decoration: none;
+}
+
+#header #welcome-info {
+	position: absolute;
+	right: 10%;
+}
+/* 网上书城顶部 CSS end */
+
+/* 网上书城菜单列表 CSS start */
+#menu_search {
+	margin: 0 auto;
+	border-top: 5px groove rgb(121, 230, 13);
+}
+
+#menu_search>ul {
+	width: 100%;
+	text-align: center;
+	height: 50px;
+	line-height: 50px;
+	background: black;
+	display: inline-table;
+	font-weight: 550;
+	font-family: '宋体';
+}
+
+#menu_search>ul>li {
+	display: inline;
+	padding: 0 1%;
+}
+
+#menu_search>ul>li>a {
+	text-decoration: none;
+	color: white;
+}
+
+#menu_search>ul>li>a:hover {
+	color: grey;
+}
+
+#menu_search>div {
+	height: 60px;
+	line-height: 60px;
+	background: orange;
+}
+
+#book_search {
+	position: relative;
+	left: 60%;
+	align-items: center;
+	display: inline-flex;
+}
+
+#book_search button{
+	border: none;
+}
+
+#book_search input {
+	height: 20px;
+}
+/* 网上书城菜单列表 CSS end */
+
+/* 网上书城尾部 CSS start */
+#footer {
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	text-align: center;
+	background-color: rgb(238, 238, 238);
+	height: 6%;
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: center;
+}
+
+#footer p {
+	padding: 5px;
+}
+/* 网上书城尾部 CSS end */

@@ -1,0 +1,29 @@
+#tips {
+	width: 80%;
+	margin: 0 auto;
+	background-color: rgb(252, 252, 236);
+	height: 600px;
+	position: relative;
+}
+
+#tips .info-area {
+	position: relative;
+	top: 40%;
+	left: 2%;
+	height: 128px;
+}
+
+#tips .info-area img {
+	float: left;
+}
+
+#tips .info-area div {
+	padding-left: 12px;
+	height: 100%;
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: center;
+}
+#tips .info-area div b{
+	color: red;
+}

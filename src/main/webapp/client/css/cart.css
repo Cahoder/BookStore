@@ -1,0 +1,44 @@
+#location{
+	margin:0.5% auto;
+	height: 30px;
+	line-height: 30px;
+	width: 80%;
+	text-align: right;
+	font-weight: 500;
+	color: grey;
+}
+#location a{
+	text-decoration: none;
+	color: blue;
+}
+#cart{
+  border: 1px groove beige;
+  width: 80%;
+  margin: 0 auto;
+  margin-top: 0.5%;
+  background-color: rgb(252, 252, 236);
+}
+#cart table{
+	width:100%;
+	padding:0.5%;
+	text-align: center;
+	line-height: 50px;
+}
+#cart table thead,#cart table tfoot{
+	background-color: rgb(226, 248, 212);
+}
+#cart table tfoot{
+	line-height: 50px;
+}
+#cart table tbody a{
+	color: gray;
+}
+#cart table tfoot th{
+	color: orange;
+}
+#cart table tfoot td{
+	line-height: normal;
+}
+#cart .address button {
+	border:none;
+}

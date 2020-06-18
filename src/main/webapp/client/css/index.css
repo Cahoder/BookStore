@@ -1,0 +1,23 @@
+#information{
+  border: 10px groove beige;
+  width: 900px;
+  margin: 0 auto;
+  margin-top: 0.5%;
+  background-color: rgb(252, 252, 236);
+}
+
+#information table td{
+  padding: 1%;
+}
+
+#information table .billboard_info{
+  text-indent: 2em;
+}
+
+#information table .hottitle_info ul{
+  padding-left: 2em;
+}
+
+#information table .hottitle_info a{
+  text-decoration: none;
+}
