@@ -31,7 +31,7 @@ public class PageUtils {
 	 */
 	private void compute() {
 		totalNo = (totalSize%pageSize==0)?totalSize/pageSize:totalSize/pageSize+1; 	//最大页数
-		if(pageNo>totalNo)
+		if(totalNo>0 && pageNo>totalNo)
 			pageNo = totalNo;
 	}
 

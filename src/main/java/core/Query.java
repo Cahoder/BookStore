@@ -228,6 +228,21 @@ public class Query extends AbstractDBUtils implements Cloneable {
     }
 	
 	/**
+     * 	根据用户所需封装结果集
+     * @param <E>
+     * @param SQL	预处理SQL语句
+     * @param params
+     * @param process
+     * @return
+     * @throws SQLException
+     */
+	public <E> E executeQuery(String SQL,ResultSetProcessor<E> processor,Object...params) 
+    		throws SQLException {
+		ResultSet rs = executeQuery(SQL, params);
+		return processor.process(rs);
+    }
+	
+	/**
 	 * 	根据用户所需封装结果集
 	 * @param <E>
 	 * @param SQL	非预处理SQL语句

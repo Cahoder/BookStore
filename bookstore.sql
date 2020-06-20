@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50728
 File Encoding         : 65001
 
-Date: 2020-06-08 14:15:26
+Date: 2020-06-20 17:58:36
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -28,7 +28,7 @@ CREATE TABLE `book_cart` (
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`,`product_id`,`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='BookStore用户购物车列表';
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='BookStore用户购物车列表';
 
 -- ----------------------------
 -- Table structure for book_favor
@@ -41,7 +41,7 @@ CREATE TABLE `book_favor` (
   `is_del` int(11) NOT NULL DEFAULT '0' COMMENT '是否被用户删除状态（0/未删除,1/已删除）',
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`,`product_id`,`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='BookStore用户收藏夹列表';
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='BookStore用户收藏夹列表';
 
 -- ----------------------------
 -- Table structure for book_notice
@@ -54,7 +54,7 @@ CREATE TABLE `book_notice` (
   `is_del` int(11) NOT NULL DEFAULT '0' COMMENT '通知删除状态（0/未删除,1/已删除）',
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='BookStore公告通知表';
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='BookStore公告通知表';
 
 -- ----------------------------
 -- Table structure for book_orderitem
@@ -77,8 +77,8 @@ CREATE TABLE `book_orders` (
   `receiverAddress` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '订单派送地址',
   `receiverName` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '订单签送人',
   `receiverPhone` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '订单签收人电话号码',
-  `paystate` int(11) NOT NULL DEFAULT '0' COMMENT '订单支付状态（0/未支付,1/已支付）',
-  `ordertime` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '订单创建时间',
+  `payState` int(11) NOT NULL DEFAULT '0' COMMENT '订单支付状态（0/未支付,1/已支付）',
+  `orderTime` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '订单创建时间',
   `user_id` int(11) NOT NULL COMMENT '订单用户ID',
   `is_del` int(11) NOT NULL DEFAULT '0' COMMENT '订单删除状态（0/未删除,1/已删除）',
   PRIMARY KEY (`id`)
@@ -101,6 +101,25 @@ CREATE TABLE `book_products` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='BookStore商品列表';
 
 -- ----------------------------
+-- Table structure for book_str
+-- ----------------------------
+DROP TABLE IF EXISTS `book_str`;
+CREATE TABLE `book_str` (
+  `id` int(8) NOT NULL AUTO_INCREMENT COMMENT '常量ID',
+  `str_cid` int(5) NOT NULL DEFAULT '0' COMMENT '常量所属类,按需分类',
+  `str_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '常量名',
+  `str_value` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '常量值',
+  `str_order` int(8) DEFAULT NULL COMMENT '常量所在类的排序',
+  `str_tips` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '常量描述信息',
+  `str_range` tinyint(2) DEFAULT NULL COMMENT '常量的应用范围（NULL无限制,0/前台,1/后台）',
+  `is_show` tinyint(2) NOT NULL DEFAULT '0' COMMENT '是否对用户显示状态（0/显示,1/不显示）',
+  `is_del` tinyint(2) NOT NULL DEFAULT '0' COMMENT '是否被删除状态（0/未删除,1/已删除）',
+  `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  PRIMARY KEY (`id`,`str_cid`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='BookStore常量表';
+
+-- ----------------------------
 -- Table structure for book_user
 -- ----------------------------
 DROP TABLE IF EXISTS `book_user`;
@@ -117,13 +136,12 @@ CREATE TABLE `book_user` (
   `is_del` int(11) NOT NULL DEFAULT '0' COMMENT '用户删除状态（0/未删除,1/已删除）',
   `avatar` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '用户头像图片连接',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='BookStore用户信息表';
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='BookStore用户信息表';
 
 -- ----------------------------
 -- Records of book_user
 -- ----------------------------
-INSERT INTO `book_user` VALUES ('1', 'admin', '123456', '男', '123456@email.com', '13333333333', '用户简介', '超级管理员', '2020-05-09 13:44:35', '0', '');
-
+INSERT INTO `book_user` VALUES ('1', 'admin', '123456', '男', '1122334455@qq.com', '13333333333', '用户简介', '超级管理员', '2020-05-09 13:44:35', '0', '');
 
 -- ----------------------------
 -- Table structure for book_user_receipt
@@ -138,5 +156,4 @@ CREATE TABLE `book_user_receipt` (
   `is_del` int(11) NOT NULL DEFAULT '0' COMMENT '是否被用户删除状态（0/未删除,1/已删除）',
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`,`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='BookStore用户签收信息列表';
-
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='BookStore用户签收信息列表';

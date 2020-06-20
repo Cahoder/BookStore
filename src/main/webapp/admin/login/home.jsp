@@ -6,15 +6,18 @@
 <head>
 <meta charset="UTF-8">
 <title>网上书城后台管理</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/admin/css/bootstrap-switch.min.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/admin/css/bootstrap.min.css">
 <script src="${pageContext.request.contextPath}/admin/js/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/admin/js/jquery.twbsPagination.min.js"></script>
 <script src="${pageContext.request.contextPath}/admin/js/bootstrap.bundle.min.js"></script>
+<script src="${pageContext.request.contextPath}/admin/js/bootstrap-switch.min.js"></script>
 <script src="${pageContext.request.contextPath}/admin/js/upload.js"></script>
 <script src="${pageContext.request.contextPath}/admin/js/order.js"></script>
 <script src="${pageContext.request.contextPath}/admin/js/product.js"></script>
 <script src="${pageContext.request.contextPath}/admin/js/notice.js"></script>
 <script src="${pageContext.request.contextPath}/admin/js/user.js"></script>
+<script src="${pageContext.request.contextPath}/admin/js/slider.js"></script>
 </head>
 <body>
 	<!-- 1.网上书城后台管理顶部 start -->
@@ -57,6 +60,14 @@
 			<jsp:include page="../notice/list.jsp"></jsp:include>
 			<!-- 3.网上书城后台管理公告管理页面 end -->
 		</c:when>
+		<c:when test="${param.item eq 'slider_list'}">
+			<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+				<h1 class="h2">Sliders</h1>
+			</div>
+			<!-- 3.网上书城后台管理轮播图管理页面 start -->
+			<jsp:include page="../slider/list.jsp"></jsp:include>
+			<!-- 3.网上书城后台管理轮播图管理页面 end -->
+		</c:when>
 		<c:when test="${param.item eq 'user_list'}">
 			<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
 				<h1 class="h2">Customers</h1>
@@ -65,7 +76,7 @@
 			<jsp:include page="../user/list.jsp"></jsp:include>
 			<!-- 3.网上书城后台管理用户管理页面 end -->
 		</c:when>
-		<c:when test="${param.item eq 'admin_list'}">
+		<c:when test="${param.item eq 'admin_list' && sessionScope.admin.role eq '超级管理员' }">
 			<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
 				<h1 class="h2">Admins</h1>
 			</div>

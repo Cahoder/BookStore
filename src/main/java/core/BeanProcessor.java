@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import utils.ReflectUtils;
 
 /**
- * 将结果集封装到给定的JavaBean泛型
+ * 	将结果集封装到给定的JavaBean泛型
  * E 应该是一个符合标准的JavaBean
  * @param <E>
  * @author CAIHONGDE

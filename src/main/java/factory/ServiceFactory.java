@@ -1,13 +1,7 @@
 package factory;
 
-import service.ICartService;
-import service.INoticeService;
-import service.IProductService;
-import service.IUserService;
-import service.impl.CartServiceImpl;
-import service.impl.NoticeServiceImpl;
-import service.impl.ProductServiceImpl;
-import service.impl.UserServiceImpl;
+import service.*;
+import service.impl.*;
 
 /**
  * Service层工厂提供类
@@ -32,5 +26,10 @@ public class ServiceFactory {
 	// 获取购车Service
 	public static ICartService getCartService() {
 		return new CartServiceImpl();
+	}
+
+	// 获取字符常量Service
+	public static IStrService getStrService() {
+		return new StrServiceImpl();
 	}
 }

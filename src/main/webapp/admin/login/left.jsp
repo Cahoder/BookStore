@@ -50,6 +50,16 @@
 								<path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg> Customers
 					</a></li>
 					<li class="nav-item"><a class="nav-link"
+						href="<%=response.encodeURL(request.getContextPath() + "/admin/login/home.jsp?item=notice_list")%>">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+								viewBox="0 0 24 24" fill="none" stroke="currentColor"
+								stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+								class="feather feather-layers">
+								<polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+								<polyline points="2 17 12 22 22 17"></polyline>
+								<polyline points="2 12 12 17 22 12"></polyline></svg> Notices
+					</a></li>
+					<li class="nav-item"><a class="nav-link"
 						href="<%=response.encodeURL(request.getContextPath() + "/admin/login/home.jsp?item=sale_list")%>">
 							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
 								viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -60,14 +70,14 @@
 								<line x1="6" y1="20" x2="6" y2="14"></line></svg> Sales
 					</a></li>
 					<li class="nav-item"><a class="nav-link"
-						href="<%=response.encodeURL(request.getContextPath() + "/admin/login/home.jsp?item=notice_list")%>">
+						href="<%=response.encodeURL(request.getContextPath() + "/admin/login/home.jsp?item=slider_list")%>">
 							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
 								viewBox="0 0 24 24" fill="none" stroke="currentColor"
 								stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
 								class="feather feather-layers">
 								<polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
 								<polyline points="2 17 12 22 22 17"></polyline>
-								<polyline points="2 12 12 17 22 12"></polyline></svg> Notices
+								<polyline points="2 12 12 17 22 12"></polyline></svg> Sliders
 					</a></li>
 					<c:if test="${sessionScope.admin.role eq '超级管理员'}">
 						<li class="nav-item"><a class="nav-link"

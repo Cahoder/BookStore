@@ -5,13 +5,13 @@
 	    name="jdbc/mysql"
 	    auth="Container"
 		type="javax.sql.DataSource"
-		username="gpnu_user"
+		username="admin"
 		password="123456"
 		maxIdle="30"
 		maxWait="10000"
 		maxActive="100"
 		driverClassName="com.mysql.cj.jdbc.Driver"
-		url="jdbc:mysql://121.36.14.14:3306/gpnu_java_test?serverTimezone=GMT%2B8"
+		url="jdbc:mysql://localhost:3306/gpnu_java_web?serverTimezone=GMT%2B8"
 		logAbandoned="true"
 	/>
 	<!-- 

@@ -1,23 +1,7 @@
 package factory;
 
-import dao.ICartDao;
-import dao.IFavorDao;
-import dao.INoticeDao;
-import dao.IOrderDao;
-import dao.IOrderItemDao;
-import dao.IProductDao;
-import dao.ISaleDao;
-import dao.IUserDao;
-import dao.IUserReceiptDao;
-import dao.impl.CartDaoImpl;
-import dao.impl.FavorDaoImpl;
-import dao.impl.NoticeDaoImpl;
-import dao.impl.OrderDaoImpl;
-import dao.impl.OrderItemDaoImpl;
-import dao.impl.ProductDaoImpl;
-import dao.impl.SaleDaoImpl;
-import dao.impl.UserDaoImpl;
-import dao.impl.UserReceiptDaoImpl;
+import dao.*;
+import dao.impl.*;
 
 /**
  * Dao层工厂提供类
@@ -67,6 +51,11 @@ public class DaoFactory {
 	// 获取购物车Dao
 	public static ICartDao getCartDao() {
 		return new CartDaoImpl();
+	}
+
+	// 获取字符常量Dao
+	public static IStrDao getStrDao() {
+		return new StrDaoImpl();
 	}
 
 }

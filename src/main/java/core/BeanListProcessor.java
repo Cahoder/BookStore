@@ -9,7 +9,7 @@ import java.util.List;
 import utils.ReflectUtils;
 
 /**
- * 将结果集封装到给定的List<JavaBean>容器
+ * 	将结果集封装到给定的List<JavaBean>容器
  * @param <E>
  * @author CAIHONGDE
  */
@@ -39,7 +39,7 @@ public class BeanListProcessor<E> implements ResultSetProcessor<List<E>>{
 	}
 	
 	/**
-	 * 获取应该插入数据的成员属性列表
+	 * 	获取应该插入数据的成员属性列表
 	 * @param rs
 	 * @return
 	 * @throws SQLException 

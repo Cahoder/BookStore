@@ -85,6 +85,9 @@ public class UpLoadFileServlet extends HttpServlet {
 		case "userAvatar":
 			path+="client\\images\\userImg\\";
 			break;
+		case "sliderImg":
+			path+="client\\images\\ad\\";
+			break;
 		default :
 			path += "";
 		}
@@ -111,6 +114,7 @@ public class UpLoadFileServlet extends HttpServlet {
 		String res = "";
 		switch (operator) {
 		case "productImg":
+		case "sliderImg":
 		case "userAvatar":
 			res = path.substring(path.indexOf("images")).replace("\\", "/");
 			break;
