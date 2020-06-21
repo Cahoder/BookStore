@@ -57,7 +57,7 @@ public interface IProductService {
 	 * @return
 	 * @throws ProductExistException
 	 */
-	public List<Product> filterProducts(String min, String max, String id, String name, String category)
+	public List<Product> filterProducts(String min,String max,String id,String name,String category) 
 			throws ProductExistException;
 	
 	/**

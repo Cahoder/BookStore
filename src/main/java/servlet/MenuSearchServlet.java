@@ -20,7 +20,7 @@ public class MenuSearchServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
 		String searchfield = request.getParameter("textfield").trim();
-		if(searchfield == "") response.sendRedirect(request.getHeader("Referer")); //从哪来回哪去
+		if("".equals(searchfield)) response.sendRedirect(request.getHeader("Referer")); //从哪来回哪去
 		IProductDao dao = DaoFactory.getProductDao();
 		
 		//在dao层中将数据整合到JavaBean中返回

@@ -46,7 +46,7 @@ public interface ICartDao {
 	 * @param cart_ids
 	 * @return
 	 */
-	public Integer delCarts(Integer... cart_ids);
+	public Integer delCarts(Integer...cart_ids);
 	
 	/**
 	 * 	更新用户购物车条目

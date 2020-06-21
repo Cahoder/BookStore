@@ -10,17 +10,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dao.IUserReceiptDao;
 import exception.CartExistException;
 import exception.UserExistException;
-import factory.DaoFactory;
 import factory.ServiceFactory;
 import model.Cart;
 import model.Product;
 import model.User;
 import model.UserReceipt;
 import service.ICartService;
-import service.IUserService;
 
 /**
  * 	客户端购物车管理
@@ -78,13 +75,13 @@ public class CartServlet extends HttpServlet {
 				//先同步一下用户的购物车数据
 				cartService.updateUserCarts(user,sessionCarts);
 				
-				IUserReceiptDao receipt = DaoFactory.getUserReceiptDao();
-				List<UserReceipt> userReceipts = receipt.getUserReceipts(user);
+				List<UserReceipt> userReceipts = ServiceFactory.getUserService()
+						.getUserDetailsById(user, user.getId().toString()).getUser_receipt();
 				
 				request.setAttribute("UserReceipt", userReceipts);
 				request.getRequestDispatcher(response.encodeURL("checkcart.jsp")).forward(request, response);
 				
-			} catch (CartExistException e) {
+			} catch (CartExistException | UserExistException e) {
 				response.getWriter().print("REQUEST-ERROR: Error Occur !");
 			}
 		}
@@ -147,12 +144,12 @@ public class CartServlet extends HttpServlet {
 		@SuppressWarnings("unchecked")
 		List<Cart> sessionCarts = (List<Cart>)request.getSession().getAttribute("UserCarts");
 		if(sessionCarts == null) {
-			IUserService userService = ServiceFactory.getUserService();
+			ICartService cartService = ServiceFactory.getCartService();
 			//查数据库用户的购物车
 			List<Cart> userCarts;
 			try {
-				userCarts = userService.getUserCartsById(user, user.getId().toString());
-			} catch (UserExistException e) {
+				userCarts = cartService.getUserCartsById(user, user.getId().toString());
+			} catch (CartExistException e) {
 				userCarts = new ArrayList<Cart>();
 			}
 			sessionCarts = userCarts;
@@ -221,11 +218,11 @@ public class CartServlet extends HttpServlet {
 			}
 			
 			//然后再查数据库用户的购物车
-			List<Cart> userCarts = ServiceFactory.getUserService().getUserCartsById(user, user.getId().toString());
+			List<Cart> userCarts = ServiceFactory.getCartService().getUserCartsById(user, user.getId().toString());
 			request.getSession().setAttribute("UserCarts", userCarts);
 			
 			request.getRequestDispatcher(response.encodeURL("cart.jsp")).forward(request, response);
-		} catch (UserExistException | CartExistException  e) {
+		} catch (CartExistException  e) {
 			response.getWriter().print("REQUEST-ERROR: Error Occur "+e.getMessage()+"!");
 		}
 	}

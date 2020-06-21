@@ -217,3 +217,24 @@ function detailAdminInfo(upd_url,upd_id){
 	}, 1000);
 	$('#adminDetailInfo').modal('show');
 }
+
+//ajax管理员删除
+function deleteAdmin(delurl,id) {
+	if(id==""||id==null) return;
+	if(!confirm("确定要删除此管理员？")) return;
+	var del_ids =[];
+	del_ids.push(id);
+	$.ajax({
+		url:delurl,
+		dataType:"json",
+		type:"POST",
+		traditional:true,
+		success:function(data,textStatus){
+			if(data.code==200) location.reload();
+		},
+		data:{
+			action:"delete",
+			ids: del_ids
+		}
+	});
+}

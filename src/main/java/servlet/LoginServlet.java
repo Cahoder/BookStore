@@ -50,11 +50,11 @@ public class LoginServlet extends HttpServlet {
 		@SuppressWarnings("unchecked")
 		List<Cart> UserCarts = (List<Cart>)request.getSession().getAttribute("UserCarts");
 		if(user != null) {
-			if(UserCarts!=null && UserCarts.size() > 0) {
+			if (UserCarts != null){
 				ICartService cartService = ServiceFactory.getCartService();
 				try {
 					cartService.updateUserCarts(user,UserCarts); //更新用户缓存里的购物车到数据库
-				} catch (CartExistException e) {}
+				} catch (CartExistException ignored) {}
 			}
 			session.removeAttribute("user");
 			session.removeAttribute("UserCarts");

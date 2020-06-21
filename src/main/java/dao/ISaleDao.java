@@ -30,7 +30,7 @@ public interface ISaleDao {
 	 * @param timestamps 年-月
 	 * @return 建立连接数据库获取指定时间段内销售记录列表的数据
 	 */
-	public List<Sale> getSalesData(Timestamp... timestamps);
+	public List<Sale> getSalesData(Timestamp ...timestamps);
 	
 	/**
 	 * 	建立连接数据库获取销售记录列表的总数量

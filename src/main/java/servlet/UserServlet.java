@@ -143,7 +143,7 @@ public class UserServlet extends HttpServlet {
 			return;
 		}
 		
-		String id = request.getParameter("id").trim();
+		String id = request.getParameter("id");
 		String name = request.getParameter("name").trim();
 		String address = request.getParameter("address").trim();
 		String phone = request.getParameter("phone").trim();
@@ -174,7 +174,7 @@ public class UserServlet extends HttpServlet {
 			
 			String id = request.getParameter("id");
 			UserReceipt defaultReceipt = null;
-			if(userReceipts!=null && userReceipts.size() > 1) {
+			if(userReceipts!=null && userReceipts.size() > 0) {
 				defaultReceipt = userReceipts.get(0);
 				if(id!=null && !"".equals(id)) 
 					for (UserReceipt u : userReceipts) 
@@ -202,13 +202,11 @@ public class UserServlet extends HttpServlet {
 		if(newUser!=null) {
 			try {
 				Integer res = ServiceFactory.getUserService().updateUser(newUser);
-				if(res == 1) {
-					request.getSession().setAttribute("user", 
-							ServiceFactory.getUserService().getUser(newUser.getUsername(), newUser.getPassword()));
-					handleUrl = "handle-success.jsp";
-					redirectUrl = "UserServlet?action=info";
-					Msg = "更新用户信息成功: Redirecting... !";
-				}
+				request.getSession().setAttribute("user",
+						ServiceFactory.getUserService().getUser(newUser.getUsername(), newUser.getPassword()));
+				handleUrl = "handle-success.jsp";
+				redirectUrl = "UserServlet?action=info";
+				Msg = "更新用户信息成功: Redirecting... !";
 			} catch (UserExistException e) {
 				handleUrl = "handle-fail.jsp";
 				redirectUrl = "./";

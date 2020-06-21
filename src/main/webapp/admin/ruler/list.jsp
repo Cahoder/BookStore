@@ -66,7 +66,7 @@
 						onclick="detailAdminInfo('<%=response.encodeURL(request.getContextPath()
 								+"/admin/AdministratorAdmin")%>','${admin.id}')">详细信息</button>
 					<button type="button" class="btn btn-danger btn-sm"
-						onclick="detailAdminInfo('<%=response.encodeURL(request.getContextPath()
+						onclick="deleteAdmin('<%=response.encodeURL(request.getContextPath()
 								+"/admin/AdministratorAdmin")%>','${admin.id}')">删除</button>
 				</td>
 			</tr>

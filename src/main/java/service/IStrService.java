@@ -23,6 +23,7 @@ public interface IStrService {
 	 * @param pageNo
 	 * @param pageSize
 	 * @return
+	 * @throws StrExistException
 	 */
 	public List<Str> getSlidersByPage(Integer pageNo, Integer pageSize) throws StrExistException;
 
@@ -68,6 +69,8 @@ public interface IStrService {
 	/**
 	 * 	通过ID获取指定的轮播图
 	 * @param slider_id
+	 * @return
+	 * @throws StrExistException
 	 */
 	public Str getSliderById(String slider_id) throws StrExistException;
 	

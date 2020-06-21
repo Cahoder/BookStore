@@ -1,19 +1,14 @@
 package service.impl;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
-import dao.ICartDao;
 import dao.IFavorDao;
-import dao.IOrderDao;
-import dao.IOrderItemDao;
 import dao.IUserDao;
 import dao.IUserReceiptDao;
 import exception.UserExistException;
 import factory.DaoFactory;
-import model.Cart;
 import model.Favor;
-import model.Order;
-import model.OrderItem;
 import model.User;
 import model.UserReceipt;
 import service.IUserService;
@@ -55,10 +50,10 @@ public class UserServiceImpl implements IUserService {
 		if(!"超级管理员".equals(op.getRole())) 
 			throw new UserExistException("查询失败,您无权力查询管理员列表!");
 		List<User> data = userDao.getUsersData("管理员",pageNo,pageSize);
-		
+
 		if(data == null)
 			throw new UserExistException("分页查询管理员列表失败!");
-		return data;
+		return data.stream().filter(user -> user.getIs_del()==0).collect(Collectors.toList());
 	}
 
 	@Override
@@ -333,6 +328,8 @@ public class UserServiceImpl implements IUserService {
 		IUserDao userDao = DaoFactory.getUserDao();
 		
 		user.setRole("普通用户");
+		if (user.getAvatar()==null)
+			user.setAvatar("");
 		Integer res = userDao.updateUser(user);
 		if(res < 1)
 			throw new UserExistException("更新用户信息失败!");
@@ -375,66 +372,6 @@ public class UserServiceImpl implements IUserService {
 		
 		user.setUser_receipt(userReceipts);
 		return user;
-	}
-
-	@Override
-	public List<Order> getUserOrdersById(User operator, String user_id) throws UserExistException {
-		if("".equals(user_id))
-			throw new UserExistException("查询失败,ID参数不可为空!");
-		if(operator == null)
-			throw new UserExistException("查询失败,操作管理者信息不明!");
-		IUserDao userDao = DaoFactory.getUserDao();
-		
-		Integer id = Integer.parseInt(user_id);
-		User user = userDao.getUserById(id);
-		if(user == null)
-			throw new UserExistException("查询失败,您查询的用户不存在!");
-		
-		User op = userDao.getUserById(operator.getId());
-		if(!op.getRole().contains("管理员") && id!=op.getId()) 
-			throw new UserExistException("查询失败,您无权力查询用户详情!");
-		
-		IOrderDao orderDao = DaoFactory.getOrderDao();
-		List<Order> userOrders = orderDao.getOrdersByUserId(user.getId());
-		
-		if(userOrders == null) 
-			throw new UserExistException("查询失败!");
-		
-		IOrderItemDao orderItemDao = DaoFactory.getOrderItemDao();
-		for (Order order : userOrders) {
-			List<OrderItem> orderItem = orderItemDao.getOrderItemByOrder(order);
-			if(orderItem == null)
-				throw new UserExistException("查询失败,该用户订单信息有误!");
-			order.setOrderItems(orderItem);
-		}
-		
-		return userOrders;		
-	}
-
-	@Override
-	public List<Cart> getUserCartsById(User operator, String user_id) throws UserExistException {
-		if("".equals(user_id))
-			throw new UserExistException("查询失败,ID参数不可为空!");
-		if(operator == null)
-			throw new UserExistException("查询失败,操作管理者信息不明!");
-		IUserDao userDao = DaoFactory.getUserDao();
-		
-		Integer id = Integer.parseInt(user_id);
-		User user = userDao.getUserById(id);
-		if(user == null)
-			throw new UserExistException("查询失败,您查询的用户不存在!");
-		
-		User op = userDao.getUserById(operator.getId());
-		if(!op.getRole().contains("管理员") && id!=op.getId()) 
-			throw new UserExistException("查询失败,您无权力查询用户详情!");
-		
-		ICartDao cartDao = DaoFactory.getCartDao();
-		List<Cart> userCarts = cartDao.getCartsByUserId(user.getId());
-		
-		if(userCarts == null) 
-			throw new UserExistException("查询失败!");
-		
-		return userCarts;
 	}
 
 	@Override

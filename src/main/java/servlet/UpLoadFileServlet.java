@@ -1,6 +1,8 @@
 package servlet;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.StringTokenizer;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -77,21 +79,28 @@ public class UpLoadFileServlet extends HttpServlet {
 	 */
 	private String getSavePath(String operator) {
 		String path = getServletContext().getRealPath("");
+		File file = new File(path);
+		String tms = "";
 		switch (operator) {
-		case "productImg":
-			path+="client\\images\\productImg\\"; 	//实际生产路径
-			//path = "F:\\eclipse\\workspaces\\BookStore\\WebContent\\client\\images\\productImg";  //开发路径
-			break;
-		case "userAvatar":
-			path+="client\\images\\userImg\\";
-			break;
-		case "sliderImg":
-			path+="client\\images\\ad\\";
-			break;
-		default :
-			path += "";
+			case "productImg":
+				tms="client\\images\\productImg\\"; 	//实际生产路径
+				//path = "F:\\eclipse\\workspaces\\BookStore\\WebContent\\client\\images\\productImg";  //开发路径
+				break;
+			case "userAvatar":
+				tms="client\\images\\userImg\\";
+				break;
+			case "sliderImg":
+				tms="client\\images\\ad\\";
+				break;
 		}
-		return path;
+		StringTokenizer token=new StringTokenizer(tms,"\\");
+		while (token.hasMoreElements())
+			file = new File (file,token.nextToken());
+
+		if(!file.exists()||!file.isDirectory())
+			file.mkdir();
+
+		return file.getAbsolutePath();
 	}
 
 	/**

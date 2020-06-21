@@ -16,7 +16,7 @@ public class NoticeDaoImpl implements INoticeDao{
 
 	@Override
 	public List<Notice> getNotices() {
-		String sql = "SELECT * FROM chd_book_notice WHERE is_del = 0";
+		String sql = "SELECT * FROM chd_book_notice WHERE is_del = 0 ORDER BY create_time DESC";
 		List<Notice> data = new ArrayList<Notice>();
 		Query query = Query.getInstance();
 		try {

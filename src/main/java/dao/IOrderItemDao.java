@@ -26,6 +26,6 @@ public interface IOrderItemDao {
 	 * @param orderItems
 	 * @return
 	 */
-	public Integer addOrderItemByOrder(Order order, List<OrderItem> orderItems);
+	public Integer addOrderItemByOrder(Order order,List<OrderItem> orderItems);
 
 }

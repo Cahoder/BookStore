@@ -11,12 +11,16 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.alibaba.fastjson.JSON;
+import exception.CartExistException;
+import exception.OrderExistException;
 import exception.UserExistException;
 import factory.ServiceFactory;
 import model.Cart;
 import model.Favor;
 import model.Order;
 import model.User;
+import service.ICartService;
+import service.IOrderService;
 import service.IUserService;
 import utils.HttpRequestUtils;
 import utils.PageUtils;
@@ -95,11 +99,11 @@ public class UserAdminServlet extends HttpServlet {
 			HttpSession session = request.getSession();
 			User admin = (User)session.getAttribute("admin");
 			
-			IUserService userService = ServiceFactory.getUserService();
+			ICartService cartService = ServiceFactory.getCartService();
 			try {
-				List<Cart> userCarts = userService.getUserCartsById(admin, request.getParameter("id"));
+				List<Cart> userCarts = cartService.getUserCartsById(admin, request.getParameter("id"));
 				response.getWriter().print(JSON.toJSONString(userCarts));
-			} catch (UserExistException e) {
+			} catch (CartExistException e) {
 				response.getWriter().print("{error-request:"+e.getMessage()+", code:404}");
 			}
 		}
@@ -118,11 +122,11 @@ public class UserAdminServlet extends HttpServlet {
 			HttpSession session = request.getSession();
 			User admin = (User)session.getAttribute("admin");
 			
-			IUserService userService = ServiceFactory.getUserService();
+			IOrderService orderService = ServiceFactory.getOrderService();
 			try {
-				List<Order> userOrders = userService.getUserOrdersById(admin,request.getParameter("id"));
+				List<Order> userOrders = orderService.getUserOrders(admin,request.getParameter("id"));
 				response.getWriter().print(JSON.toJSONString(userOrders));
-			} catch (UserExistException e) {
+			} catch (OrderExistException e) {
 				response.getWriter().print("{error-request:"+e.getMessage()+", code:404}");
 			}
 		}
@@ -187,7 +191,7 @@ public class UserAdminServlet extends HttpServlet {
 			request.setAttribute("totalNo", page.getTotalNo());
 			request.setAttribute("pageSize", page.getPageSize());
 		} catch (UserExistException e) {
-			e.printStackTrace();
+			response.getWriter().print("{error-request:"+e.getMessage()+", code:502}");
 		}
 	}
 

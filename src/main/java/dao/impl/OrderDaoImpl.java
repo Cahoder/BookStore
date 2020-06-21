@@ -144,6 +144,32 @@ public class OrderDaoImpl implements IOrderDao {
 	}
 
 	@Override
+	public List<Order> getOrdersByUserId(Integer user_id, Integer pageNo, Integer pageSize) {
+		List<Order> list = null;
+		Query query = Query.getInstance();
+		try {
+			String sql = "SELECT chd_book_orders.*,chd_book_user.username FROM chd_book_orders "
+					+ "INNER JOIN chd_book_user ON chd_book_orders.user_id = chd_book_user.id "
+					+ "WHERE chd_book_orders.is_del = 0 AND chd_book_orders.user_id = ? LIMIT ?,?";
+			ResultSet rs = query.executeQuery(sql, new Object[] {user_id,(pageNo-1)*pageSize,pageSize});
+			list = new ArrayList<Order>();
+			while (rs.next()) {
+				User user = new User();
+				user.setId(rs.getInt("user_id"));
+				user.setUsername(rs.getString("username"));
+				list.add(new Order(rs.getString("id"), rs.getDouble("money"), rs.getString("receiverAddress"),
+						rs.getString("receiverName"), rs.getString("receiverPhone"), rs.getInt("payState"),
+						rs.getTimestamp("orderTime"), user));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			query.close();
+		}
+		return list;
+	}
+
+	@Override
 	public List<Order> getOrderByReceiverName(String receiverName) {
 		ArrayList<Order> list = new ArrayList<Order>();
 		Query query = Query.getInstance();
@@ -199,6 +225,21 @@ public class OrderDaoImpl implements IOrderDao {
 		try {
 			String sql = "SELECT COUNT(*) FROM chd_book_orders WHERE is_del = 0";
 			res = query.executeQueryCount(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			query.close();
+		}
+		return res;
+	}
+
+	@Override
+	public Integer getOrdersCountByUserId(Integer user_id) {
+		Integer res = 0;
+		Query query = Query.getInstance();
+		try {
+			String sql = "SELECT COUNT(*) FROM chd_book_orders WHERE user_id = ? AND is_del = 0";
+			res = query.executeQueryCount(sql,new Object[]{user_id});
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {

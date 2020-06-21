@@ -47,7 +47,7 @@ public interface IUserDao {
 	 * @param password
 	 * @return <code>null</code> if no special user exist
 	 */
-	public User verifyUser(String username, String password);
+	public User verifyUser(String username,String password);
 	
 	/**
 	 * 	根据用户名和密码和角色验证用户是否存在
@@ -56,7 +56,7 @@ public interface IUserDao {
 	 * @param password
 	 * @return <code>null</code> if no special user exist
 	 */
-	public User verifyUser(String role, String username, String password);
+	public User verifyUser(String role,String username,String password);
 	
 	/**
 	 * 	删除用户

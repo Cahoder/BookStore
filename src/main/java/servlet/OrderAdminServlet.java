@@ -12,12 +12,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.alibaba.fastjson.JSON;
 import dao.IOrderDao;
-import dao.IOrderItemDao;
-import dao.IUserDao;
+import exception.OrderExistException;
 import factory.DaoFactory;
+import factory.ServiceFactory;
 import model.Order;
-import model.OrderItem;
 import model.User;
+import service.IOrderService;
 import utils.HttpRequestUtils;
 import utils.PageUtils;
 
@@ -86,12 +86,14 @@ public class OrderAdminServlet extends HttpServlet {
 			response.getWriter().print("{error-request:Please Send Param 'ids', code:404}");
 		else {
 			String[] ids = request.getParameterValues("ids");
-			IOrderDao dao = DaoFactory.getOrderDao();
-			Integer dels = dao.delOrderByIds(ids);
-			if(dels>0)
+			User admin = (User)request.getSession().getAttribute("admin");
+			
+			try {
+				Integer dels = ServiceFactory.getOrderService().deleteUserOrders(admin, ids);
 				response.getWriter().print("{\"success-request\":\"Delete "+dels+" Records\", \"code\":200}");
-			else 
-				response.getWriter().print("{\"error-request\":\"Delete Failed\", \"code\":502}");
+			} catch (OrderExistException e) {
+				response.getWriter().print("{\"error-request\":\"Delete Failed "+e.getMessage()+"\", \"code\":502}");
+			}
 		}
 	}
 
@@ -105,16 +107,15 @@ public class OrderAdminServlet extends HttpServlet {
 			response.getWriter().print("{error-request:Please Send Param 'order-id', code:404}");
 		else {
 			String id = request.getParameter("id").trim();
-			IOrderDao orderDao = DaoFactory.getOrderDao();
-			Order order = orderDao.getOrderById(id);
-			IUserDao userDao = DaoFactory.getUserDao();
-			User user = userDao.getUserById(order.getUser().getId());
-			order.setUser(user);
-			IOrderItemDao orderItemDao = DaoFactory.getOrderItemDao();
-			List<OrderItem> orderItems = orderItemDao.getOrderItemByOrder(order);
-			order.setOrderItems(orderItems);
+			User admin = (User)request.getSession().getAttribute("admin");
 			
-			response.getWriter().print(JSON.toJSONString(order));
+			IOrderService service = ServiceFactory.getOrderService();
+			try {
+				Order order = service.detailUserOrder(admin, id);
+				response.getWriter().print(JSON.toJSONString(order));
+			} catch (OrderExistException e) {
+				response.getWriter().print("{error-request:"+e.getMessage()+", code:404}");
+			}
 		}
 	}
 
@@ -126,14 +127,19 @@ public class OrderAdminServlet extends HttpServlet {
 		Integer pageSize = request.getParameter("pageSize")!=null 
 				? Integer.parseInt(request.getParameter("pageSize")) : 10;
 		
-		IOrderDao dao = DaoFactory.getOrderDao();
-		PageUtils page = new PageUtils(pageNo, pageSize, dao.getOrdersCount());
+		User admin = (User)request.getSession().getAttribute("admin");
 		
-		request.setAttribute("OrderList", dao.getOrdersData(page.getPageNo(),page.getPageSize()));
-		
-		request.setAttribute("pageNo", page.getPageNo());
-		request.setAttribute("totalNo", page.getTotalNo());
-		request.setAttribute("pageSize", page.getPageSize());
+		IOrderService service = ServiceFactory.getOrderService();
+		try {
+			PageUtils page = new PageUtils(pageNo, pageSize, service.getOrdersCount(admin));
+			request.setAttribute("OrderList", service.getOrders(admin, page.getPageNo(),page.getPageSize()));
+			
+			request.setAttribute("pageNo", page.getPageNo());
+			request.setAttribute("totalNo", page.getTotalNo());
+			request.setAttribute("pageSize", page.getPageSize());
+		} catch (OrderExistException e) {
+			response.getWriter().print("REQUEST-ERROR: Error Occur "+e.getMessage()+"!");
+		}
 	}
 	
 }

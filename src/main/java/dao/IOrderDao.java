@@ -24,19 +24,27 @@ public interface IOrderDao {
 	 * @param pageSize
 	 * @return 建立连接数据库分页获取订单列表的数据
 	 */
-	public List<Order> getOrdersData(Integer pageNo, Integer pageSize);
+	public List<Order> getOrdersData(Integer pageNo,Integer pageSize);
 	
 	/**
 	 * @param order_ids 需要删除的订单ids
 	 * @return 建立连接数据库删除订单的影响函数,小于等于0为插入失败,大于0为删除条数
 	 */
-	public Integer delOrderByIds(String... order_ids);
+	public Integer delOrderByIds(String...order_ids);
 	
 	/**
 	 * @param user_id 需要查找的用户ID
 	 * @return 建立连接数据库获取指定用户ID的所有订单列表的数据
 	 */
 	public List<Order> getOrdersByUserId(Integer user_id);
+	
+	/**
+	 * @param user_id 需要查找的用户ID
+	 * @param pageNo
+	 * @param pageSize
+	 * @return 建立连接数据库分页获取指定用户ID的所有订单列表的数据
+	 */
+	public List<Order> getOrdersByUserId(Integer user_id,Integer pageNo,Integer pageSize);
 	
 	/**
 	 * @param order_id
@@ -57,11 +65,18 @@ public interface IOrderDao {
 	public Integer getOrdersCount();
 	
 	/**
+	 * 	根据用户ID建立连接数据库获取其订单总数量
+	 * @param user_id
+	 * @return
+	 */
+	public Integer getOrdersCountByUserId(Integer user_id);
+	
+	/**
 	 * 	建立连接数据库更新订单支付状态
 	 * @param payState
 	 * @param order_id
 	 * @return
 	 */
-	public Integer updateOrder(String order_id, Integer payState);
+	public Integer updateOrder(String order_id,Integer payState);
 	
 }

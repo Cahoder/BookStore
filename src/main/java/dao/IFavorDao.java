@@ -46,6 +46,6 @@ public interface IFavorDao {
 	 * @param favor_ids
 	 * @return
 	 */
-	public Integer delFavors(Integer... favor_ids);
+	public Integer delFavors(Integer ...favor_ids);
 	
 }

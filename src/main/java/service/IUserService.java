@@ -3,9 +3,7 @@ package service;
 import java.util.List;
 
 import exception.UserExistException;
-import model.Cart;
 import model.Favor;
-import model.Order;
 import model.User;
 
 /**
@@ -45,6 +43,8 @@ public interface IUserService {
 	 * 	根据管理员ID获取管理员的详细信息
 	 * @param operator
 	 * @param admin_id
+	 * @return
+	 * @throws UserExistException
 	 */
 	public User getAdminDetailsById(User operator, String admin_id) throws UserExistException;
 
@@ -53,8 +53,9 @@ public interface IUserService {
 	 * @param operator 只有超级管理员才有资格获取管理员信息
 	 * @param like 目前只用到了 "用户名查询......"
 	 * @return
+	 * @throws UserExistException
 	 */
-	public List<User> filterAdmins(User operator, String... like) throws UserExistException;
+	public List<User> filterAdmins(User operator, String ...like) throws UserExistException;
 	
 	/**
 	 * 	添加管理员
@@ -73,7 +74,7 @@ public interface IUserService {
 	 * @return
 	 * @throws UserExistException
 	 */
-	public User getAdmin(String adminname, String password) throws UserExistException;
+	public User getAdmin(String adminname,String password) throws UserExistException;
 	
 	/**
 	 * 	删除管理员
@@ -106,8 +107,9 @@ public interface IUserService {
 	 * @param operator 只有管理员才有资格获取用户信息
 	 * @param like 目前只用到了 "用户名查询......"
 	 * @return
+	 * @throws UserExistException
 	 */
-	public List<User> filterUsers(User operator, String... like) throws UserExistException;
+	public List<User> filterUsers(User operator, String ...like) throws UserExistException;
 
 	/**
 	 * 	分页查找所有普通用户
@@ -117,11 +119,12 @@ public interface IUserService {
 	 * @return
 	 * @throws UserExistException
 	 */
-	public List<User> getUsersByPage(User operator, Integer pageNo, Integer pageSize) throws UserExistException;
+	public List<User> getUsersByPage(User operator,Integer pageNo,Integer pageSize) throws UserExistException;
 	
 	/**
 	 * 	添加普通用户
 	 * @return <b>0</b> if insert the new user failed.
+	 * @throws UserExistException
 	 */
 	public Integer addUser(User user) throws UserExistException;
 	
@@ -155,26 +158,9 @@ public interface IUserService {
 	 * @param operator
 	 * @param user_id
 	 * @return
+	 * @throws UserExistException
 	 */
 	public User getUserDetailsById(User operator, String user_id) throws UserExistException;
-	
-	/**
-	 * 	根据用户ID获取用户的所有订单详细信息
-	 * @param operator
-	 * @param user_id
-	 * @return
-	 * @throws UserExistException
-	 */
-	public List<Order> getUserOrdersById(User operator, String user_id) throws UserExistException;
-	
-	/**
-	 * 	根据用户ID获取用户的购物车所有条目详细信息
-	 * @param operator
-	 * @param user_id
-	 * @return
-	 * @throws UserExistException
-	 */
-	public List<Cart> getUserCartsById(User operator, String user_id) throws UserExistException;
 	
 	/**
 	 * 	根据用户ID获取用户的收藏夹所有条目详细信息

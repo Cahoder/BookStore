@@ -37,10 +37,11 @@ public class NoticeServlet extends HttpServlet {
 		}
 		
 		//获取公告通知
-		Integer NoticeIndex = request.getParameter("ni") != null && !"".equals(request.getParameter("ni")) 
-				? Integer.valueOf(request.getParameter("ni")) : 0;
+		int NoticeIndex = request.getParameter("ni") != null && !"".equals(request.getParameter("ni"))
+				? Integer.parseInt(request.getParameter("ni")) : 0;
 		INoticeService service = ServiceFactory.getNoticeService();
 		List<Notice> NoticeList = service.getNotices().stream().limit(5).collect(Collectors.toList());
+		System.out.println(NoticeList.size());
 		request.setAttribute("ni", NoticeIndex%NoticeList.size());
 		request.setAttribute("Notice", NoticeList);
 		

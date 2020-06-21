@@ -58,7 +58,7 @@ public interface IProductDao {
 	 * @param max
 	 * @return 建立连接数据库匹配价格区间商品列表的数据
 	 */
-	public List<Product> priceFilterProductsData(Integer min, Integer max);
+	public List<Product> priceFilterProductsData(Integer min,Integer max);
 	
 	/**
 	 * @param category

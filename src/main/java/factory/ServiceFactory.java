@@ -28,6 +28,11 @@ public class ServiceFactory {
 		return new CartServiceImpl();
 	}
 
+	// 获取订单Service
+	public static IOrderService getOrderService() {
+		return new OrderServiceImpl();
+	}
+
 	// 获取字符常量Service
 	public static IStrService getStrService() {
 		return new StrServiceImpl();

@@ -48,6 +48,10 @@ public class UserReceipt {
 		this.phone = phone;
 	}
 
+	public UserReceipt(Integer id) {
+		this.id = id;
+	}
+
 	public Integer getId() {
 		return id;
 	}
