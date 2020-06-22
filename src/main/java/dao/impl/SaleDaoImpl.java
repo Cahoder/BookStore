@@ -89,15 +89,15 @@ public class SaleDaoImpl implements ISaleDao {
 	}
 
 	@Override
-	public List<Sale> getSalesData(Timestamp... timestamps) {
+	public List<Sale> getOnSalesData(Integer pageNo, Integer pageSize) {
 		ArrayList<Sale> list = new ArrayList<Sale>();
 		Query query = Query.getInstance();
 		try {
 			String sql = "select bp.name,sum(bo.buynum) as buynum,bo.product_id,bp.category "
-					+ "from chd_book_orderitem bo left join chd_book_products bp on bp.id = bo.product_id "
-					+ "inner join chd_book_orders ord on ord.id = bo.order_id where ord.ordertime between ? and ? "
-					+ "group by bo.product_id order by buynum desc";
-			ResultSet rs = query.executeQuery(sql, timestamps);
+					+ "from chd_book_orderitem bo left join chd_book_products bp "
+					+ "on bp.id = bo.product_id and bp.is_del = 0 "
+					+ "group by bo.product_id order by buynum desc limit ?,?";
+			ResultSet rs = query.executeQuery(sql,new Object[]{(pageNo-1)*pageSize,pageSize});
 			while (rs.next()) {
 				list.add(new Sale(
 					rs.getInt("buynum"),
@@ -114,6 +114,58 @@ public class SaleDaoImpl implements ISaleDao {
 		return list;
 	}
 
+	@Override
+	public List<Sale> getSalesBetweenData(Timestamp start, Timestamp end) {
+		ArrayList<Sale> list = new ArrayList<Sale>();
+		Query query = Query.getInstance();
+		try {
+			String sql = "select bp.name,sum(bo.buynum) as buynum,bo.product_id,bp.category "
+					+ "from chd_book_orderitem bo left join chd_book_products bp on bp.id = bo.product_id "
+					+ "inner join chd_book_orders ord on ord.id = bo.order_id where ord.ordertime between ? and ? "
+					+ "group by bo.product_id order by buynum desc";
+			ResultSet rs = query.executeQuery(sql, new Object[] {start,end});
+			while (rs.next()) {
+				list.add(new Sale(
+					rs.getInt("buynum"),
+					rs.getString("product_id"),
+					rs.getString("name"),
+					rs.getString("category")
+				));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			query.close();
+		}
+		return list;
+	}
+
+	@Override
+	public List<Sale> getOnSalesBetweenData(Timestamp start, Timestamp end) {
+		ArrayList<Sale> list = new ArrayList<Sale>();
+		Query query = Query.getInstance();
+		try {
+			String sql = "select bp.name,sum(bo.buynum) as buynum,bo.product_id,bp.category "
+					+ "from chd_book_orderitem bo left join chd_book_products bp "
+					+ "on bp.id = bo.product_id and bp.is_del = 0 "
+					+ "inner join chd_book_orders ord on ord.id = bo.order_id where ord.ordertime between ? and ? "
+					+ "group by bo.product_id order by buynum desc";
+			ResultSet rs = query.executeQuery(sql, new Object[] {start,end});
+			while (rs.next()) {
+				list.add(new Sale(
+					rs.getInt("buynum"),
+					rs.getString("product_id"),
+					rs.getString("name"),
+					rs.getString("category")
+				));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			query.close();
+		}
+		return list;
+	}
 
 	@Override
 	public Integer getSalesCount() {
@@ -122,6 +174,22 @@ public class SaleDaoImpl implements ISaleDao {
 		try {
 			String sql = "select count(distinct bo.product_id) from chd_book_orderitem bo "
 					+ "left join chd_book_products bp on bp.id = bo.product_id";
+			res = query.executeQueryCount(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			query.close();
+		}
+		return res;
+	}
+
+	@Override
+	public Integer getOnSalesCount() {
+		Integer res = 0;
+		Query query = Query.getInstance();
+		try {
+			String sql = "select count(distinct bo.product_id) from chd_book_orderitem bo "
+					+ "left join chd_book_products bp on bp.id = bo.product_id and bp.is_del = 0";
 			res = query.executeQueryCount(sql);
 		} catch (SQLException e) {
 			e.printStackTrace();

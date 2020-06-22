@@ -9,9 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dao.ISaleDao;
+import exception.SaleExistException;
 import exception.StrExistException;
-import factory.DaoFactory;
 import factory.ServiceFactory;
 import model.Notice;
 import model.Sale;
@@ -44,11 +43,13 @@ public class NoticeServlet extends HttpServlet {
 		System.out.println(NoticeList.size());
 		request.setAttribute("ni", NoticeIndex%NoticeList.size());
 		request.setAttribute("Notice", NoticeList);
-		
+
 		//获取销售榜单
-		ISaleDao dao = DaoFactory.getSaleDao();
-		List<Sale> sale = dao.getOnSalesData().stream().limit(6).collect(Collectors.toList());
-		request.setAttribute("Sale", sale);
+		try {
+			List<Sale> sale = ServiceFactory.getSaleService()
+					.getOnSales().stream().limit(6).collect(Collectors.toList());
+			request.setAttribute("Sale", sale);
+		} catch (SaleExistException ignored) {}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

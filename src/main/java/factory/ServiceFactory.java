@@ -37,4 +37,9 @@ public class ServiceFactory {
 	public static IStrService getStrService() {
 		return new StrServiceImpl();
 	}
+
+	// 获取销售榜单Service
+    public static ISaleService getSaleService() {
+		return new SaleServiceImpl();
+    }
 }
