@@ -31,7 +31,7 @@ public class UserServiceImpl implements IUserService {
 		
 		if(data == null)
 			throw new UserExistException("查询管理员列表失败!");
-		return data;
+		return data.stream().filter(user -> user.getIs_del()==0).collect(Collectors.toList());
 	}
 
 	@Override
