@@ -22,14 +22,14 @@ public class SaleServiceImpl implements ISaleService{
 
 	@Override
 	public List<Sale> getSales(Integer pageNo, Integer pageSize) throws SaleExistException {
-		if(pageNo == null || "".equals(pageNo) || pageSize == null || "".equals(pageSize))
+		if(pageNo == null || pageSize == null )
 			throw new SaleExistException("查询失败，参数有误！");
 		return DaoFactory.getSaleDao().getSalesData(pageNo, pageSize);
 	}
 
 	@Override
 	public List<Sale> getOnSales(Integer pageNo, Integer pageSize) throws SaleExistException {
-		if(pageNo == null || "".equals(pageNo) || pageSize == null || "".equals(pageSize))
+		if(pageNo == null || pageSize == null)
 			throw new SaleExistException("查询失败，参数有误！");
 		return DaoFactory.getSaleDao().getOnSalesData(pageNo, pageSize);
 	}
